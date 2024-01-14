@@ -52,7 +52,7 @@ jobs:
           mkdir -p reports
       - uses: actions/download-artifact@v3
         with:
-          name: Build
+          name: report
           path: reports/
       - run: zip -r reports.zip reports/
       - uses: ncipollo/release-action@v1
