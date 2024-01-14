@@ -74,4 +74,4 @@ jobs:
             Regards,
             abc
           attachments: |
-            ./reports/test-report/report.html
+            reports.zip
