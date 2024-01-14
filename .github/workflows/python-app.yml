@@ -32,6 +32,7 @@ jobs:
       run: |
         pytest -v -s -m shah --html=config/report.html
     - name: Upload content
+      if: always()
       uses: actions/upload-artifact@v3
       with:
         name: test-report
