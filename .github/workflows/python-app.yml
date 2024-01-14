@@ -44,6 +44,10 @@ jobs:
     needs: build
       
     steps: 
+      - name: Generate random tag
+        id: random-tag
+        run: echo "::set-output name=TAG::$(uuidgen)"
+        
       - uses: actions/download-artifact@v3
         with:
           name: test-report
@@ -51,6 +55,5 @@ jobs:
       - run: zip -r reports.zip reports/
       - uses: ncipollo/release-action@v1
         with:
-          tag: v1.0.5
+          ref: ${{ steps.random-tag.outputs.TAG }}
           artifacts: "reports.zip"
-          
