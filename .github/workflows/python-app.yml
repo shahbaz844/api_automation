@@ -4,9 +4,9 @@
 name: Python application
 
 on:
-  push:
+  create:
     tags:
-      - '*'
+      - v*
 
 permissions:
   contents: read
