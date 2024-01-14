@@ -46,7 +46,7 @@ jobs:
     steps: 
       - name: Generate random tag
         id: random-tag
-        run: echo "::set-output name=TAG::$(uuidgen)"
+        run: echo "TAG=$(uuidgen)" >> $GITHUB_ENV
         
       - uses: actions/download-artifact@v3
         with:
@@ -55,5 +55,5 @@ jobs:
       - run: zip -r reports.zip reports/
       - uses: ncipollo/release-action@v1
         with:
-          ref: ${{ steps.random-tag.outputs.TAG }}
+          tag: ${{ env.TAG }}
           artifacts: "reports.zip"
