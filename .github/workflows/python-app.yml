@@ -47,13 +47,9 @@ jobs:
     needs: build
       
     steps: 
-      - name: create download artifacts directory
-        run: |
-          mkdir -p reports
       - uses: actions/download-artifact@v3
         with:
-          name: report.html
-          path: reports/
+          path: ./reports/
       - run: zip -r reports.zip reports/
       - uses: ncipollo/release-action@v1
         with:
