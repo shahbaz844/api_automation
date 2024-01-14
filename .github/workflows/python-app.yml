@@ -4,9 +4,7 @@
 name: Python application
 
 on:
-  create:
-    tags:
-      - v*
+  [push]
 
 permissions:
   contents: read
@@ -53,4 +51,5 @@ jobs:
       - run: zip -r reports.zip reports/
       - uses: ncipollo/release-action@v1
         with:
+          tag: v1.0.5
           artifacts: "reports.zip"
