@@ -37,3 +37,23 @@ jobs:
       with:
         name: test-report
         path: config/
+
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      
+    needs: build
+      
+    steps: 
+      - name: create download artifacts directory
+        run: |
+          mkdir -p reports
+      - uses: actions/download-artifact@v3
+        with:
+          name: Build
+          path: reports/
+      - run: zip -r reports.zip reports/
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "reports.zip"
