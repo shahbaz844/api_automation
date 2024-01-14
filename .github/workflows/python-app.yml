@@ -49,6 +49,7 @@ jobs:
     steps: 
       - uses: actions/download-artifact@v3
         with:
+          name: artifact
           path: ./reports/
       - run: zip -r reports.zip reports/
       - uses: ncipollo/release-action@v1
