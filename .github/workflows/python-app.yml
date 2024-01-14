@@ -39,6 +39,7 @@ jobs:
         path: config/
 
   release:
+    if: always()
     runs-on: ubuntu-latest
     permissions:
       contents: write
