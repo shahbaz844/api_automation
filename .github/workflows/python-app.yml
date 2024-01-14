@@ -58,20 +58,18 @@ jobs:
           tag: ${{ env.TAG }}
           artifacts: "reports.zip"
 
-      - name: Send email with Cypress artifacts
+      - name: Send email with artifacts
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 465
-          username: "shahshahbaz64@gmail.com"
-          password: "Sh@hb@z1234!"
           subject: "test report"
-          from: Test Suite
+          to: shahbazsyed496@gmail.com
+          from: shahshahbaz64@gmail.com
           body: |
             Hi,
             its a test report email.
             Regards,
             abc
-          to: shahbazsyed496@gmail.com
           attachments: |
             ./reports/test-report/report.html
