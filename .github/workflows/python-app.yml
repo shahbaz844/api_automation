@@ -33,7 +33,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: test-report
-        path: config/report.html
+        path: config/
 
   release:
     if: always()
