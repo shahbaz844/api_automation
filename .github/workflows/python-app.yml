@@ -65,9 +65,9 @@ jobs:
           server_port: 465
           subject: "test report"
           to: shahbazsyed496@gmail.com
-          username: "Ayyaz Shah"
-          password: "Ayyaz1234"
-          from: sayyaz856@gmail.com
+          username: "shahshahbaz64@gmail.com"
+          password: "fnuk rpzf tcor uuoe"
+          from: shahshahbaz64@gmail.com
           body: |
             Hi,
             its a test report email.
