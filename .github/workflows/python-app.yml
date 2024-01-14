@@ -66,7 +66,7 @@ jobs:
           subject: "test report"
           to: shahbazsyed496@gmail.com
           username: "shahshahbaz64@gmail.com"
-          password: "fnuk rpzf tcor uuoe"
+          password: "app password"
           from: shahshahbaz64@gmail.com
           body: |
             Hi,
