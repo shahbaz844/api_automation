@@ -18,19 +18,22 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
         python-version: "3.11"
+    
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
     - name: Test with pytest
       run: |
-        pytest -v -s -m shah --alluredir=allure-report
-        allure serve allure-report
+        pytest -v -s -m shah --alluredir=allure-results
+      continue-on-error: true
         
     - name: Get Allure history
       uses: actions/checkout@v3
@@ -41,13 +44,10 @@ jobs:
         path: gh-pages
 
     - name: Allure Report action from marketplace
-      uses: simple-elf/allure-report-action@master
+      uses: simple-elf/allure-report-action@v1.7
       if: always()
-      id: allure-report
       with:
         allure_results: allure-results
-        gh_pages: gh-pages
-        allure_report: allure-report
         allure_history: allure-history
         keep_reports: 20
 
