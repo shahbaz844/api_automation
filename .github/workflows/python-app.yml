@@ -58,4 +58,3 @@ jobs:
         PERSONAL_TOKEN: "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"
         PUBLISH_BRANCH: gh-pages
         PUBLISH_DIR: allure-history
-      
