@@ -27,7 +27,6 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: |
-        npm install -g allure-commandline --save-dev
         pytest -v -s -m shah --alluredir=config/report.html
         allure serve config/report.html
 
