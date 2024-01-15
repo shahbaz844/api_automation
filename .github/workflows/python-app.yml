@@ -27,51 +27,32 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: |
-        pytest -v -s -m shah --html=config/report.html
-    - name: Upload content
-      if: success() || failure()
-      uses: actions/upload-artifact@v3
+        npm install -g allure-commandline --save-dev
+        pytest -v -s -m shah --alluredir=config/report.html
+        allure serve config/report.html
+
+    - name: Get Allure history
+      uses: actions/checkout@v3
+      if: always()
+      continue-on-error: true
       with:
-        name: test-report
-        path: config/
+        ref: gh-pages
+        path: gh-pages
 
-  release:
-    if: always()
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      
-    needs: build
-      
-    steps: 
-      - name: Generate random tag
-        id: random-tag
-        run: echo "TAG=$(uuidgen)" >> $GITHUB_ENV
-        
-      - uses: actions/download-artifact@v3
-        with:
-          name: test-report
-          path: ./reports/
-      - run: zip -r reports.zip reports/
-      - uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ env.TAG }}
-          artifacts: "reports.zip"
+    - name: Allure Report action from marketplace
+      uses: simple-elf/allure-report-action@master
+      if: always()
+      id: allure-report
+      with:
+        allure_results: allure-results
+        gh_pages: gh-pages
+        allure_report: allure-report
+        allure_history: allure-history
 
-      - name: Send email with artifacts
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          subject: "test report"
-          to: shahbazsyed496@gmail.com
-          username: "shahshahbaz64@gmail.com"
-          password: "app password"
-          from: shahshahbaz64@gmail.com
-          body: |
-            Hi,
-            its a test report email.
-            Regards,
-            abc
-          attachments: |
-            reports.zip
+    - name: Deploy report to Github Pages
+      if: always()
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: allure-history
