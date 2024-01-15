@@ -27,9 +27,15 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: |
-        pytest -v -s -m shah --alluredir=config/report.html
-        allure serve config/report.html
-
+        pytest -v -s -m shah --alluredir=allure-report
+        allure serve allure-report
+    
+    - uses: actions/upload-artifact@master
+      with:
+        name: allure-results
+        path: allure-results
+        retention-days: 20
+        
     - name: Get Allure history
       uses: actions/checkout@v3
       if: always()
@@ -47,11 +53,12 @@ jobs:
         gh_pages: gh-pages
         allure_report: allure-report
         allure_history: allure-history
+        keep_reports: 20
 
     - name: Deploy report to Github Pages
       if: always()
       uses: peaceiris/actions-gh-pages@v3
       with:
-        PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PERSONAL_TOKEN: "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"
         PUBLISH_BRANCH: gh-pages
         PUBLISH_DIR: allure-history
